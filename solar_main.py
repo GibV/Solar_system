@@ -34,13 +34,13 @@ def execution():
     """
     global physical_time
     global displayed_time
-    print([[obj.x, obj.y] for obj in space_objects])
+##    print([[obj.x, obj.y] for obj in space_objects])
     recalculate_space_objects_positions(space_objects, time_step.get())
-    print([[obj.x, obj.y] for obj in space_objects])
+##    print([[obj.x, obj.y] for obj in space_objects])
     for body in space_objects:
         update_object_position(space, body)
-    print([[obj.x, obj.y] for obj in space_objects])
-    print('!!!!!!!!!!!!!!')
+##    print([[obj.x, obj.y] for obj in space_objects])
+##    print('!!!!!!!!')
     physical_time += time_step.get()
     displayed_time.set("%.1f" % physical_time + " seconds gone")
 
