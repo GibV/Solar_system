@@ -45,7 +45,7 @@ def execution():
     displayed_time.set("%.1f" % physical_time + " seconds gone")
 
     if perform_execution:
-        space.after(1, execution)#(101 - int(time_speed.get()))//2, execution)
+        space.after(101 - int(time_speed.get()), execution)
 
 
 def start_execution():
@@ -105,6 +105,12 @@ def save_file_dialog():
     out_filename = asksaveasfilename(filetypes=(("Text file", ".txt"),))
     write_space_objects_data_to_file(out_filename, space_objects)
 
+def save_statistic_dialog():
+    """Открывает диалоговое окно выбора имени файла и записывает изменение
+    состояний обьектов от времени в данный файл.
+    """
+    out_filename = asksaveasfilename(filetypes=(("Text file", ".txt"),))
+    write_statistic_to_file(out_filename, space_objects)
 
 def main():
     """Главная функция главного модуля.
@@ -144,6 +150,8 @@ def main():
     load_file_button.pack(side=tkinter.LEFT)
     save_file_button = tkinter.Button(frame, text="Save to file...", command=save_file_dialog)
     save_file_button.pack(side=tkinter.LEFT)
+    save_stats_button = tkinter.Button(frame, text="Save statistic to file...", command=save_statistic_dialog)
+    save_stats_button.pack(side=tkinter.LEFT)
 
     displayed_time = tkinter.StringVar()
     displayed_time.set(str(physical_time) + " seconds gone")

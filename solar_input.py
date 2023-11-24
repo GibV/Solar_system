@@ -55,6 +55,7 @@ def parse_star_parameters(line, star):
     star.y = float(line_fix[5])
     star.Vx = float(line_fix[6])
     star.Vy = float(line_fix[7])
+    star.stats = [[0, star.x, star.y, star.Vx, star.Vy]]
     pass  # FIXME: not done yet
 
 def parse_planet_parameters(line, planet):
@@ -80,6 +81,7 @@ def parse_planet_parameters(line, planet):
     planet.y = float(line_fixp[5])
     planet.Vx = float(line_fixp[6])
     planet.Vy = float(line_fixp[7])
+    planet.stats = [[0, planet.x, planet.y, planet.Vx, planet.Vy]]
     pass  # FIXME: not done yet...
 
 
@@ -100,8 +102,14 @@ def write_space_objects_data_to_file(output_filename, space_objects):
             # FIXME: should store real values
 
 # FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
-##def save
-
+def write_statistic_to_file(output_file, space_objects):
+    with open(output_file, 'w') as out_file:
+        for obj in space_objects:
+            print(len(obj.stats), end = ' ')
+            out_file.write(f'{obj.type} {obj.R} {obj.color} {obj.m} {obj.x} {obj.y} {obj.Vx} {obj.Vy}\n')
+            for line in obj.stats:
+                out_file.write(" ".join(list(map(str, line))) + '\n')
+    print()
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
