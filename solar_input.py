@@ -50,7 +50,7 @@ def parse_star_parameters(line, star):
     star.x = int(line_fix[4])
     star.y = int(line_fix[5])
     star.Vx = int(line_fix[6])
-    star.Vy = int(lin_fix[7])
+    star.Vy = int(line_fix[7])
     pass  # FIXME: not done yet
 
 def parse_planet_parameters(line, planet):
@@ -75,7 +75,7 @@ def parse_planet_parameters(line, planet):
     planet.x = int(line_fixp[4])
     planet.y = int(line_fixp[5])
     planet.Vx = int(line_fixp[6])
-    planet.Vy = int(lin_fixp[7])
+    planet.Vy = int(line_fixp[7])
     pass  # FIXME: not done yet...
 
 
