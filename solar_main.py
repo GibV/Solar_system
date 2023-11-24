@@ -45,7 +45,7 @@ def execution():
     displayed_time.set("%.1f" % physical_time + " seconds gone")
 
     if perform_execution:
-        space.after(101 - int(time_speed.get()), execution)
+        space.after(1, execution)#(101 - int(time_speed.get()))//2, execution)
 
 
 def start_execution():
