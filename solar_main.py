@@ -34,9 +34,13 @@ def execution():
     """
     global physical_time
     global displayed_time
+    print([[obj.x, obj.y] for obj in space_objects])
     recalculate_space_objects_positions(space_objects, time_step.get())
+    print([[obj.x, obj.y] for obj in space_objects])
     for body in space_objects:
         update_object_position(space, body)
+    print([[obj.x, obj.y] for obj in space_objects])
+    print('!!!!!!!!!!!!!!')
     physical_time += time_step.get()
     displayed_time.set("%.1f" % physical_time + " seconds gone")
 
@@ -80,6 +84,7 @@ def open_file_dialog():
         space.delete(obj.image)  # удаление старых изображений планет
     in_filename = askopenfilename(filetypes=(("Text file", ".txt"),))
     space_objects = read_space_objects_data_from_file(in_filename)
+    print([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
     max_distance = max([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
 
