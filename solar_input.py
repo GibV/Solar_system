@@ -23,6 +23,10 @@ def read_space_objects_data_from_file(input_filename):
                 star = Star()
                 parse_star_parameters(line, star)
                 objects.append(star)
+            elif object_type == "planet":  # FIXME: do the same for planet
+                planet = Planet()
+                parse_planet_parameters(line, planet)
+                objects.append(planet)
             else:
                 print("Unknown space object")
 
@@ -43,7 +47,15 @@ def parse_star_parameters(line, star):
     **line** — строка с описание звезды.
     **star** — объект звезды.
     """
-
+    line_fix = line.split()
+    star.R = int(line_fix[1])
+    star.color = line_fix[2]
+    star.m = float(line_fix[3])
+    star.x = float(line_fix[4])
+    star.y = float(line_fix[5])
+    star.Vx = float(line_fix[6])
+    star.Vy = float(line_fix[7])
+    star.stats = [[0, star.x, star.y, star.Vx, star.Vy]]
     pass  # FIXME: not done yet
 
 def parse_planet_parameters(line, planet):
@@ -61,6 +73,15 @@ def parse_planet_parameters(line, planet):
     **line** — строка с описание планеты.
     **planet** — объект планеты.
     """
+    line_fixp = line.split()
+    planet.R = int(line_fixp[1])
+    planet.color = line_fixp[2]
+    planet.m = float(line_fixp[3])
+    planet.x = float(line_fixp[4])
+    planet.y = float(line_fixp[5])
+    planet.Vx = float(line_fixp[6])
+    planet.Vy = float(line_fixp[7])
+    planet.stats = [[0, planet.x, planet.y, planet.Vx, planet.Vy]]
     pass  # FIXME: not done yet...
 
 
@@ -77,10 +98,18 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
-            print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
+            out_file.write(f'{obj.type} {obj.R} {obj.color} {obj.m} {obj.x} {obj.y} {obj.Vx} {obj.Vy}\n')
             # FIXME: should store real values
 
 # FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
+def write_statistic_to_file(output_file, space_objects):
+    with open(output_file, 'w') as out_file:
+        for obj in space_objects:
+            print(len(obj.stats), end = ' ')
+            out_file.write(f'{obj.type} {obj.R} {obj.color} {obj.m} {obj.x} {obj.y} {obj.Vx} {obj.Vy}\n')
+            for line in obj.stats:
+                out_file.write(" ".join(list(map(str, line))) + '\n')
+    print()
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

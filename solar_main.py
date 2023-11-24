@@ -34,9 +34,13 @@ def execution():
     """
     global physical_time
     global displayed_time
+##    print([[obj.x, obj.y] for obj in space_objects])
     recalculate_space_objects_positions(space_objects, time_step.get())
+##    print([[obj.x, obj.y] for obj in space_objects])
     for body in space_objects:
         update_object_position(space, body)
+##    print([[obj.x, obj.y] for obj in space_objects])
+##    print('!!!!!!!!')
     physical_time += time_step.get()
     displayed_time.set("%.1f" % physical_time + " seconds gone")
 
@@ -80,6 +84,7 @@ def open_file_dialog():
         space.delete(obj.image)  # удаление старых изображений планет
     in_filename = askopenfilename(filetypes=(("Text file", ".txt"),))
     space_objects = read_space_objects_data_from_file(in_filename)
+    print([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
     max_distance = max([max(abs(obj.x), abs(obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
 
@@ -100,6 +105,12 @@ def save_file_dialog():
     out_filename = asksaveasfilename(filetypes=(("Text file", ".txt"),))
     write_space_objects_data_to_file(out_filename, space_objects)
 
+def save_statistic_dialog():
+    """Открывает диалоговое окно выбора имени файла и записывает изменение
+    состояний обьектов от времени в данный файл.
+    """
+    out_filename = asksaveasfilename(filetypes=(("Text file", ".txt"),))
+    write_statistic_to_file(out_filename, space_objects)
 
 def main():
     """Главная функция главного модуля.
@@ -118,10 +129,10 @@ def main():
     root = tkinter.Tk()
     # космическое пространство отображается на холсте типа Canvas
     space = tkinter.Canvas(root, width=window_width, height=window_height, bg="black")
-    space.pack(side=tkinter.TOP)
+    space.pack(side=tkinter.BOTTOM)
     # нижняя панель с кнопками
     frame = tkinter.Frame(root)
-    frame.pack(side=tkinter.BOTTOM)
+    frame.pack(side=tkinter.TOP)
 
     start_button = tkinter.Button(frame, text="Start", command=start_execution, width=6)
     start_button.pack(side=tkinter.LEFT)
@@ -139,6 +150,8 @@ def main():
     load_file_button.pack(side=tkinter.LEFT)
     save_file_button = tkinter.Button(frame, text="Save to file...", command=save_file_dialog)
     save_file_button.pack(side=tkinter.LEFT)
+    save_stats_button = tkinter.Button(frame, text="Save statistic to file...", command=save_statistic_dialog)
+    save_stats_button.pack(side=tkinter.LEFT)
 
     displayed_time = tkinter.StringVar()
     displayed_time.set(str(physical_time) + " seconds gone")
